@@ -1,0 +1,104 @@
+
+body{
+font-size:15px;
+font-family:Arial, Helvetica, sans-serif;
+background-color:#F4F5F7;
+}
+
+.main_div{
+    display:flex;
+    flex-direction: column;
+
+    align-items:center;
+    height:100%;
+    margin-top:4rem;
+}
+
+.header_div{
+
+}
+
+.login_div{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    width:29rem;
+
+    border-style:groove;
+    border-color:lightgray;
+    border-width:0.5px;
+    padding:1rem;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.lf_div{
+
+}
+.form_div{
+    width:85%;
+    height:100%;
+}
+
+#header{
+    margin-top:3rem;
+    margin-bottom:5rem;
+}
+
+#lf_message{
+font-size:1.8rem;
+font-weight: 600;
+margin-top:1rem;
+
+}
+
+.label_form{
+font-size:0.9rem;
+font-weight:600;
+}
+
+.input_box{
+width:100%;
+height:1.8rem;
+padding:0.5rem;
+padding-bottom:1rem;
+padding-top:1rem;
+margin-top:0.4rem;
+margin-bottom:1rem;
+
+}
+
+.wrong{
+border: 1px solid #AD0A0A;
+}
+.wrong:focus{
+outline: 1px solid #AD0A0A;
+}
+
+.notfound_div{
+display:flex;
+gap:0.4rem;
+align-items:center;
+margin-top:-0.6rem;
+margin-bottom:1rem;
+color: C7001E;
+font-size:0.7rem;
+}
+
+ /* Removes black outline when focusing element, so only border is visible*/
+
+
+#login{
+width:100%;
+height:2.2rem;
+background-color:#0088ff;
+color:lightgray;
+font-size:1rem;
+font-weight:600;
+cursor:hand;
+margin-bottom:2rem;
+}
+
+#signup_link{
+display:block;
+text-align:center;
+}

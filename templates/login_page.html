@@ -1,0 +1,51 @@
+<html lang = "en">
+<head>
+    <link rel="stylesheet" href="../static/styles.css">
+    <title></title>
+</head>
+<body>
+
+<div class="main_div">
+
+    <h2 id = "header">Log into your account so we can keep track of your goals!</h2>
+
+    <div class = "login_div">
+        <div class = "lf_div">
+            <p id = "lf_message">Login Form</p>
+        </div>
+
+        <div class = "form_div">
+            <form method = "post" id = "login_form">
+                {% if (username == "wrong")%}
+                <label for="log_user_w" class = "label_form">Username:</label>
+                <input type="text" name = "login_username" id = "log_user_w" class = "input_box wrong" value = "{{incorrect_username}}" placeholder="Enter your username" autofocus>
+                <div class= "notfound_div">
+                    <img src="../static/notfound_sign.png" alt="no_sign" style = "width:1rem">
+                    Profile not found
+                </div>
+                {% else%}
+                <label for="log_user" class = "label_form">Username:</label>
+                <input type="text" name = "login_username" id = "log_user" class = "input_box" value = "{{correct_username}}" placeholder="Enter your username: " >
+                {% endif %}
+
+                {% if (password == "wrong")%}
+                <label for="log_pass_w" class = "label_form" >Password:</label>
+                <input type="text" name = "login_password" id = "log_pass_w" class = "input_box wrong" placeholder="Enter your password: " autofocus>
+                <div class= "notfound_div">
+                    <img src="../static/notfound_sign.png" alt="no_sign" style = "width:1rem">
+                    Incorrect password. Try again.
+                </div>
+                {% else %}
+                <label for="log_pass" class = "label_form" >Password:</label>
+                <input type="text" name = "login_password" id = "log_pass" class = "input_box" placeholder="Enter your password: ">
+                {% endif %}
+                <input type="submit" name = "login_button" id = "login" value = "Login">
+                <a id = "signup_link" href = "{{ url_for('signup')}}">Don't have an account? </a>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>
