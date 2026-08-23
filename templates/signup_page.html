@@ -1,12 +1,64 @@
 <html lang = "en">
-    <body>
-        <form method = "post">
-            <input type="text" name = "signup_username" placeholder="enter your username: " autofocus>
-            <br>
-            <input type="text" name = "signup_password" placeholder="enter your password: ">
-            <br>
-            <input type="submit" name = "signup_button" value = "Sign up">
-            <br>
-        </form>
-    </body>
+<head>
+    <link rel="stylesheet" href="../static/styles.css">
+    <title>Sign up</title>
+</head>
+<body>
+
+<script src = "../static/index.js"></script>
+<div class="main_div" >
+
+
+    <div class = "login_div">
+        <div class = "lf_div">
+            <p class = "form_header su_header">Sign up</p>
+            <label  class ="header_label">Sign up to continue</label>
+        </div>
+    
+          <div class = "form_div">
+               <form method = "post" id = "signup_form">
+                   {% if (username == "invalid") %}
+                   <input type="text" name = "signup_username"  class = "input_box su_input su_wrong"  placeholder="Username" autofocus>
+                   <div class= "error_div">
+                        <img src="../static/notfound_sign.png" alt="no_sign" style = "width:1rem">
+                        {{error_message}}
+                   </div>
+                   {% else %}
+                   <input type="text" name = "signup_username"  class = "input_box su_input" value = "{{username}}"  placeholder="Username">
+                   {% endif %}
+
+                   {% if (password =="invalid")  %}
+                   <div class = "pass_div">
+                       <input type="password" name = "signup_password"  class = "input_box su_input su_wrong"  placeholder="Password" autofocus >
+                       <img src="../static/showpass.png"  alt="show password" class = "pass_img" onclick = "togglePassword()">
+                   </div>
+                   <div class= "error_div">
+                        <img src="../static/notfound_sign.png" alt="not found" style = "width:1rem">
+                        {{error_message}}
+                   </div>
+                   {% else %}
+                   <div class ="pass_div" id = "kur">
+                       <input type="password" name = "signup_password" class = "input_box su_input" value = "{{password}}"    placeholder="Password" >
+                       <img src="../static/showpass.png" alt="no_sign" class = "pass_img" onclick="togglePassword()">
+                   </div>
+                   {% endif %}
+
+                   {% if (email =="invalid") %}
+                   <input type="text" name = "signup_email"  class = "input_box su_input su_wrong"  placeholder="Email" autofocus >
+                   <div class= "error_div">
+                        <img src="../static/notfound_sign.png" alt="no_sign" style = "width:1rem">
+                        {{error_message}}
+                   </div>
+                   {% else %}
+                   <input type="text" name = "signup_email"  class = "input_box su_input"  placeholder="Email" value = "{{email}}" >
+                   {% endif %}
+                   <button type="submit" form = "signup_form" name = "signup_button" id = "signup">Sign up</button>
+
+               </form>
+          </div>
+    </div>
+     <p class ="redirect_login">Already have an account? <a href = "{{url_for('login')}}">Sign in</a></p>
+</div>
+
+</body>
 </html>

@@ -14,5 +14,6 @@ class Users(db.Model):
 class Accounts(db.Model):
     __tablename__ = "accounts"
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
-    username: Mapped[str] = mapped_column(String(25))
-    password: Mapped[str] = mapped_column(String(150))
+    username: Mapped[str] = mapped_column(String(250))
+    password: Mapped[str] = mapped_column(String(250))
+    email: Mapped[str] = mapped_column(String(250))
