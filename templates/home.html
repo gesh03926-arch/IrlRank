@@ -1,5 +1,80 @@
-<html>
-    <body>
-        <p>hey, {{username}}</p>
-    </body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PROJECTTTTT</title>
+    <link rel="stylesheet" href="../static/styles.css">
+</head>
+<body id = "homepage_body">
+    <script src = "../static/index.js"></script>
+
+    <div class = "backdrop hidden" id = "backdrop">
+
+    </div>
+    <div class = "nav_menu" id = "homepage_nav">
+
+        <div class = "main_navigation">
+            <div class = "menu_div" id = "menu_div">
+                <img class = "menu_icon" src="../static/website_images/menu.png" alt="">
+                <div class= "menu_icon_nav_info hidden " id = "menu_icon_nav_info" >Open menu</div>
+            </div>
+            <div class = "homepage_icon_div">
+                <a  href="{{url_for('home')}}"> <img class = "homepage_icon" src="../static/website_images/homepage.png" alt=""> </a>
+                <div class= "homepage_icon_nav_info hidden " id = "homepage_icon_nav_info" >Homepage</div>
+            </div>
+        </div>
+
+        <div class ="pfp_div" id = "pfp_div">
+            <img class ="pfp" src="{{current_user.pfp_path}}" alt="profile_picture">
+            <div class= "pfp_nav_info hidden" id = "pfp_nav_info" >Open user navigation menu</div>
+        </div>
+
+        <div class = "user_nav hidden" id = "user_navigation">
+            <div class = "user_nav_profile">
+                <img class ="pfp" src="{{current_user.pfp_path}}" alt="profile_picture">
+                <div class ="user_nav_username">
+                    {{current_user.username}}
+                </div>
+            </div>
+            <hr class = "user_nav_sep">
+            <div class ="user_nav_options">
+                <a href="{{url_for(current_user.account_action)}}" style = "text-decoration:none">
+                    <button class = "user_nav_button">
+                        <img class = "signout_icon" src="../static/website_images/signout_icon.png" alt="sign_out_icon">
+                        <p class ="nav_button_name">{{current_user.account_action_text}}</p>
+                    </button>
+                </a>
+            </div>
+        </div>
+
+        <div class = "menu_nav hidden" id = "menu_navigation">
+            <div class ="menu_nav_main_row">
+                <img class = "homepage_icon" src="../static/website_images/homepage.png" alt="">
+                <div class = "close_icon_div" id = "close_icon_div">
+                    <img class = "close_icon" src="../static/website_images/close_icon.png" alt="">
+                </div>
+            </div>
+            <div class ="menu_nav_options">
+                <a href="{{url_for('home')}}" style = "text-decoration:none">
+                    <button class ="menu_nav_button">
+                        <img class = "house_icon" src="../static/website_images/house.png" alt="">
+                        <p class = "nav_button_name">Home</p>
+                    </button>
+                </a>
+            </div>
+        </div>
+
+        <
+
+    </div>
+
+
+
+    <div id = "kur">
+        
+    </div>
+</body>
 </html>
+
+
