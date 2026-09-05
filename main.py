@@ -14,13 +14,14 @@ from flask_login import(
     UserMixin,
     AnonymousUserMixin
 )
+from sqlalchemy import update, delete
 import oauthlib
 from oauthlib.oauth2 import WebApplicationClient
 import requests
 
 # Internal imports
 from extentions import db
-from db_tables import Users
+from db_tables import Users, MarkedDates
 import validation
 import configs
 from anonymous_user_info import AnonymousUser
@@ -36,7 +37,6 @@ client = WebApplicationClient(GOOGLE_CLIENT_ID)
 
 
 app = Flask("main.py")
-
 app.config["SQLALCHEMY_DATABASE_URI"] = (
     "mysql+{drive}://{username}:{password}@{host}/{database}".format(
             drive = db_info["drive"],
@@ -64,14 +64,93 @@ login_manager.anonymous_user = AnonymousUser
 #Use this to hash passwords
 bcrypt = Bcrypt(app)
 
+
 @login_manager.user_loader
 def load_user(user_id):
     return db.session.query(Users).get(user_id)
 
-@app.route("/")
+@app.route("/", methods = ["GET", "POST"])
 def home():
+    if current_user.is_anonymous:
+        if request.method == "POST":
+            work_name = request.form.get("work_name")
+            session['work'] = work_name
+            return redirect(url_for('signup'))
+        return render_template(
+            template_name_or_list="landing_page.html"
+        )
+
+    mark_dict = {}
+    for row in MarkedDates.query.all():
+        if not mark_dict.__contains__(row.month_and_year):
+            position_and_dates = {"left":[], "current":[], "right":[]}
+            dates = position_and_dates.get(row.position)
+            dates.append(row.date)
+            mark_dict.update({row.month_and_year:position_and_dates})
+        else:
+            position_and_dates = mark_dict.get(row.month_and_year)
+            dates = position_and_dates.get(row.position)
+            dates.append(row.date)
+    print(json.dumps(mark_dict))
+
+    if request.method == "POST":
+        hours_worked = int(request.form.get("hours_worked"))
+        update_hours = (update(Users)
+                 .where(Users.id == current_user.id)
+                 .values(hours_worked = current_user.hours_worked + hours_worked)
+        )
+        db.session.execute(update_hours)
+        mark_dict = json.loads(request.form.get("mark_dict"))
+        for month_year in mark_dict:
+            marked_dates = mark_dict[month_year]
+            for left_date in marked_dates["left"]:
+                exists = MarkedDates.query.filter(
+                    MarkedDates.month_and_year == month_year,
+                    MarkedDates.date == left_date,
+                    MarkedDates.position == "left"
+                ).first()
+                if not exists:
+                    new_marked_date = MarkedDates(
+                        month_and_year = month_year,
+                        date = left_date,
+                        position = "left",
+                        user_id = current_user.id
+                    )
+                    db.session.add(new_marked_date)
+            for current_date in marked_dates["current"]:
+                exists = MarkedDates.query.filter(
+                    MarkedDates.month_and_year == month_year,
+                    MarkedDates.date == current_date,
+                    MarkedDates.position == "current"
+                ).first()
+                if not exists:
+                    new_marked_date = MarkedDates(
+                        month_and_year=month_year,
+                        date=current_date,
+                        position="current",
+                        user_id=current_user.id
+                    )
+                    db.session.add(new_marked_date)
+            for right_date in marked_dates["right"]:
+                exists = MarkedDates.query.filter(
+                    MarkedDates.month_and_year == month_year,
+                    MarkedDates.date == right_date,
+                    MarkedDates.position == "right"
+                ).first()
+                if not exists:
+                    new_marked_date = MarkedDates(
+                        month_and_year=month_year,
+                        date=right_date,
+                        position="right",
+                        user_id=current_user.id
+                    )
+                    db.session.add(new_marked_date)
+        db.session.commit()
+
+
     return render_template(
         template_name_or_list="home.html",
+        mark_dict = json.dumps(mark_dict)
     )
 
 @app.route("/login", methods = ["GET", "POST"])
@@ -113,6 +192,7 @@ def login():
     return render_template(
         template_name_or_list="login_page.html",
 
+
     )
 
 @app.route("/redirect/logout")
@@ -133,7 +213,7 @@ def login_google():
         redirect_uri = request.base_url + "/callback",
         scope = ["openid", "email", "profile"]
     )
-    print(request_uri, " this is request url")
+
     return redirect(request_uri)
 @app.route("/login/google/callback")
 def login_google_callback():
@@ -190,7 +270,12 @@ def login_google_callback():
     if already_registered_user:
         login_user(already_registered_user, remember=True)
     else:
-        user = Users(username = users_name, email = users_email, pfp_path = picture)
+        user = Users(
+            username = users_name,
+            email = users_email,
+            work = session.get('work'),
+            pfp_path = picture
+        )
         db.session.add(user)
         db.session.commit()
         login_user(user, remember=True)
@@ -241,18 +326,25 @@ def signup():
             )
 
         hashed_password = bcrypt.generate_password_hash(signup_password)
-        user = Users(username = signup_username, password = hashed_password, email = signup_email ,pfp_path = "../static/anon_pfp.png")
+
+        user = Users(
+            username = signup_username,
+            password = hashed_password,
+            email = signup_email,
+            work = session.get('work'),
+            pfp_path = "../static/website_images/anon_pfp.png"
+        )
         db.session.add(user)
         db.session.commit()
         login_user(user)
         return redirect(location=url_for("home"))
 
     return render_template(
+
         template_name_or_list="signup_page.html"
     )
 
-
 #Executes the website when main.py is run, debug to see errors / HTTP requests,
 if __name__ == "__main__":
-    app.run(debug=True, ssl_context="adhoc") # ssl_context is shortcut to get HTTPS protocol, not good longterm maybe
+    app.run(debug=True, ssl_context = "adhoc") # ssl_context is shortcut to get HTTPS protocol, not good longterm maybe
 

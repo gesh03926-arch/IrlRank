@@ -1,80 +1,62 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PROJECTTTTT</title>
-    <link rel="stylesheet" href="../static/styles.css">
-</head>
-<body id = "homepage_body">
-    <script src = "../static/index.js"></script>
+{% extends 'base.html' %}
+{% block title %} homepage {% endblock %}
+{% block body_info%} id = "homepage_body" {% endblock %}
 
-    <div class = "backdrop hidden" id = "backdrop">
+    {% block navmenu %}
+        {% include 'navmenu.html' %}
+    {% endblock %}
 
-    </div>
-    <div class = "nav_menu" id = "homepage_nav">
 
-        <div class = "main_navigation">
-            <div class = "menu_div" id = "menu_div">
-                <img class = "menu_icon" src="../static/website_images/menu.png" alt="">
-                <div class= "menu_icon_nav_info hidden " id = "menu_icon_nav_info" >Open menu</div>
-            </div>
-            <div class = "homepage_icon_div">
-                <a  href="{{url_for('home')}}"> <img class = "homepage_icon" src="../static/website_images/homepage.png" alt=""> </a>
-                <div class= "homepage_icon_nav_info hidden " id = "homepage_icon_nav_info" >Homepage</div>
-            </div>
-        </div>
+    {% block content %}
 
-        <div class ="pfp_div" id = "pfp_div">
-            <img class ="pfp" src="{{current_user.pfp_path}}" alt="profile_picture">
-            <div class= "pfp_nav_info hidden" id = "pfp_nav_info" >Open user navigation menu</div>
-        </div>
+        <div class = "homepage_main_section">
+            <div class = "calendar_container" id = "calendar">
+                <header class ="calendar_header">
+                        <div class = "month_and_year" id = "month_and_year">
+                            curr_date
+                        </div>
+                        <div class = "calendar_navigation">
+                            <div id="calendar_prev">
+                                <img class = "calendar_left" src="../static/website_images/left-arrow.png" alt="">
+                            </div>
 
-        <div class = "user_nav hidden" id = "user_navigation">
-            <div class = "user_nav_profile">
-                <img class ="pfp" src="{{current_user.pfp_path}}" alt="profile_picture">
-                <div class ="user_nav_username">
-                    {{current_user.username}}
+                            <div id="calendar_next">
+                                <img class = "calendar_right" src="../static/website_images/right-arrow.png" alt="">
+                            </div>
+                        </div>
+                </header>
+
+                <div class = "calendar_body">
+                    <ul class = "calendar_weekdays">
+                        <li>Sun</li>
+                        <li>Mon</li>
+                        <li>Tue</li>
+                        <li>Wed</li>
+                        <li>Thu</li>
+                        <li>Fri</li>
+                        <li>Sat</li>
+                    </ul>
+                    <ul class = "calendar_dates_list" id = "calendar_dates_list">
+
+                    </ul>
                 </div>
             </div>
-            <hr class = "user_nav_sep">
-            <div class ="user_nav_options">
-                <a href="{{url_for(current_user.account_action)}}" style = "text-decoration:none">
-                    <button class = "user_nav_button">
-                        <img class = "signout_icon" src="../static/website_images/signout_icon.png" alt="sign_out_icon">
-                        <p class ="nav_button_name">{{current_user.account_action_text}}</p>
-                    </button>
-                </a>
+
+            <div class = "hours_display">
+                Hours worked = <span id = "hours_worked">{{current_user.hours_worked}}</span>
             </div>
         </div>
 
-        <div class = "menu_nav hidden" id = "menu_navigation">
-            <div class ="menu_nav_main_row">
-                <img class = "homepage_icon" src="../static/website_images/homepage.png" alt="">
-                <div class = "close_icon_div" id = "close_icon_div">
-                    <img class = "close_icon" src="../static/website_images/close_icon.png" alt="">
-                </div>
-            </div>
-            <div class ="menu_nav_options">
-                <a href="{{url_for('home')}}" style = "text-decoration:none">
-                    <button class ="menu_nav_button">
-                        <img class = "house_icon" src="../static/website_images/house.png" alt="">
-                        <p class = "nav_button_name">Home</p>
-                    </button>
-                </a>
-            </div>
-        </div>
 
-        <
-
+    <div class ="add_hours_div hidden" id = "add_hours_div">
+        <form method = "POST" class = "hours_form" id = "hours_form">
+            <label for="hours_input" id = "hours_label"></label>
+            <input name = "hours_worked" type="text" class ="hours_input" id = "hours_input" >
+            <input name = "mark_dict" type="hidden" id = "mark_dict_input" value = "{{mark_dict}}">
+        </form>
     </div>
+    {% endblock %}
 
 
-
-    <div id = "kur">
-        
-    </div>
-</body>
-</html>
 
 

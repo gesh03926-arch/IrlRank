@@ -4,11 +4,10 @@ font-size:16px;
 font-family:Arial, Helvetica, sans-serif;
 background-color:#F4F5F7;
 margin:0;
-
 }
 
-#home_body{
-}
+
+
 p{
 margin:0px;
 }
@@ -36,7 +35,6 @@ display:none;
     flex-direction:column;
     align-items:center;
     width:29rem;
-
     border-style:groove;
     border-color:lightgray;
     border-width:0.5px;
@@ -210,6 +208,7 @@ margin-top:1.5rem;
 display:flex;
 position:relative;
 background-color:#E5E4E2;
+width:100vw;
 height:4rem;
 align-items:center;
 justify-content:center;
@@ -399,7 +398,7 @@ animation-duration: 0.3s;
 .menu_nav_main_row{
 display:flex;
 align-items:center;
-gap:13rem;
+justify-content:space-between;
 margin-bottom:2.2rem;
 }
 .menu_nav_options{
@@ -412,10 +411,6 @@ height:1rem;
 }
 
 
-#homepage_body{
-height:90vh;
-width:100%;
-}
 
 @keyframes backdropOpacity{
 from{opacity:0;}
@@ -429,5 +424,164 @@ position:fixed;
 background-color:#c8d1da66;
 animation-name: backdropOpacity;
 animation-duration:0.2s;
+
+}
+#landing_page_body{
+
+height:72vh;
+padding-top:28vh;
+}
+
+.entername_form{
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+margin-left:auto;
+margin-right:auto;
+
+
+}
+
+.entername_header{
+font-size:1.8rem;
+text-align:left;
+width:21.5rem;
+margin:0;
+margin-bottom:3rem;
+}
+
+.entername_input{
+text-align:center;
+margin-left:-2rem;
+border: 0;
+border-bottom: 2px solid #9b9b9b;
+outline: 0;
+font-size: 1.2rem;
+padding: 7px 0;
+background: transparent;
+transition: border-color 0.2s;
+}
+
+.entername_input:focus{
+font-size:1.3rem;
+font-weight:500;
+padding-bottom: 6px;
+border-width: 3px;
+border-image: linear-gradient(to right, #11998e,#38ef7d);
+border-image-slice: 1;
+}
+
+#homepage_body{
+height:100vh;
+}
+.homepage_main_section{
+display:flex;
+background-color:yellow;
+position:absolute;
+top:20vh;
+left:15vw;
+width:70vw;
+align-items:center;
+justify-content:space-between;
+}
+.calendar_container{
+background: #484747;
+color:white;
+width: 22rem;
+height:30rem;
+border-radius: 10px;
+box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+padding:1.8rem;
+}
+
+.calendar_header{
+display:flex;
+justify-content:space-between;
+margin-bottom:3rem;
+}
+.calendar_navigation{
+gap:1.2rem;
+display:flex;
+}
+.month_and_year{
+font-size:1.5rem;
+}
+#calendar_prev, #calendar_next{
+padding:0.15rem;
+}
+#calendar_prev:hover, #calendar_next:hover{
+cursor:pointer;
+}
+.calendar_left, .calendar_right{
+height:0.8rem;
+}
+.calendar_body{
+display:grid;
+column-gap:1rem;
+row-gap:2.4rem;
+grid-template-columns: repeat(7, 1fr)
+}
+.calendar_weekdays, .calendar_dates_list{
+display:contents;
+list-style-type: none;
+padding:0;
+text-align:center;
+}
+.calendar_date{
+padding-top:0.3rem;
+padding-bottom:0.3rem;
+}
+.calendar_date:hover{
+cursor:pointer;
+}
+.left_date, .right_date{
+opacity:0.5;
+}
+
+.add_hours_div{
+position:fixed;
+top:40vh;
+left:48vw;
+padding:1rem;
+border:1px solid lightgray;
+border-radius: 20px;
+box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+z-index:101;
+background-color:white;
+}
+
+.hours_form{
+display:flex;
+flex-direction:column;
+align-items:center;
+gap:1rem;
+}
+#hours_label{
+font-size:0.8rem;
+opacity:0.6;
+}
+.hours_input{
+text-align:center;
+border: 0;
+border-bottom: 2px solid #9b9b9b;
+outline: 0;
+font-size: 1rem;
+padding: 7px 0;
+background: transparent;
+transition: border-color 0.2s;
+width:2rem;
+}
+.hours_input:focus{;
+placeholder = ""
+border-width: 3px;
+border-image: linear-gradient(to right, #11998e,#38ef7d);
+border-image-slice: 1;
+}
+.hours_display{
+background-color:green;
+padding:1rem;
+margin-top:-5rem;
+font-size:2rem;
 
 }
