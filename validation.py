@@ -36,3 +36,11 @@ def validate_email(email : str) -> str:
     if same_email_account:
         return "Email address is already registered"
     return "valid"
+
+
+def validate_workname(workname : str) -> str:
+    if len(workname) <2:
+        return "Workname must be at least 2 characters long!"
+    if len(workname) >=15:
+        return "Workname is too long - shorten it!"
+    return "valid"

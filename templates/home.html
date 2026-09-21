@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% block html_id%} id = "cal_page" {% endblock %}
 {% block title %} homepage {% endblock %}
 {% block body_info%} id = "homepage_body" {% endblock %}
 
@@ -8,53 +9,23 @@
 
 
     {% block content %}
-
-        <div class = "homepage_main_section">
-            <div class = "calendar_container" id = "calendar">
-                <header class ="calendar_header">
-                        <div class = "month_and_year" id = "month_and_year">
-                            curr_date
-                        </div>
-                        <div class = "calendar_navigation">
-                            <div id="calendar_prev">
-                                <img class = "calendar_left" src="../static/website_images/left-arrow.png" alt="">
-                            </div>
-
-                            <div id="calendar_next">
-                                <img class = "calendar_right" src="../static/website_images/right-arrow.png" alt="">
-                            </div>
-                        </div>
-                </header>
-
-                <div class = "calendar_body">
-                    <ul class = "calendar_weekdays">
-                        <li>Sun</li>
-                        <li>Mon</li>
-                        <li>Tue</li>
-                        <li>Wed</li>
-                        <li>Thu</li>
-                        <li>Fri</li>
-                        <li>Sat</li>
-                    </ul>
-                    <ul class = "calendar_dates_list" id = "calendar_dates_list">
-
-                    </ul>
-                </div>
-            </div>
-
-            <div class = "hours_display">
-                Hours worked = <span id = "hours_worked">{{current_user.hours_worked}}</span>
+        <h1 class ="homepage_header">Homepage</h1>
+        {% include 'calendar.html' %}
+        <div class = "center_div">
+            <div class ="add_hours_div hidden" id = "add_hours_div">
+                <form method = "POST" class = "hours_form" id = "hours_form">
+                    <label for="hours_input" id = "hours_label"></label>
+                    <input name = "hours_worked" type="text" class ="hours_input" id = "hours_input" pattern = "[1-9]|1[0-5]" placeholder="1-15">
+                    <input name="month_year" type = "hidden" id = "month_year_input" value = "{{month_year}}">
+                    <input name = "mark_dict" type="hidden" id = "mark_dict_input" value = "{{mark_dict}}">
+                    <input name = "remove_dict" type="hidden" id = "remove_dict_input">
+                </form>
             </div>
         </div>
+        <input name = "markable" type="hidden" id = "markable_input" value = {{markable_bool}}>
 
 
-    <div class ="add_hours_div hidden" id = "add_hours_div">
-        <form method = "POST" class = "hours_form" id = "hours_form">
-            <label for="hours_input" id = "hours_label"></label>
-            <input name = "hours_worked" type="text" class ="hours_input" id = "hours_input" >
-            <input name = "mark_dict" type="hidden" id = "mark_dict_input" value = "{{mark_dict}}">
-        </form>
-    </div>
+
     {% endblock %}
 
 

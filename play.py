@@ -1,5 +1,5 @@
+from datetime import datetime, timedelta
 
-str = "Hello world {name}{}"
 
-dict = {"yo":5}
-dict.
+print (1/10)
+

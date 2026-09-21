@@ -1,74 +1,83 @@
-<html lang = "en">
-<head>
-    <link rel="stylesheet" href="../static/styles.css">
-    <title>Sign up</title>
-</head>
-<body>
-<script src = "../static/index.js"></script>
-
-<div class="main_div" >
+{% extends 'base.html' %}
+{% block title %}Sign up{% endblock %}
+{% block body_info %} {% endblock %}
 
 
-    <div class = "login_div">
-        <div class = "lf_div">
-            <p class = "form_header su_header">Sign up</p>
-            <label  class ="header_label">Sign up to continue</label>
+    {% block content%}
+        <div class="main_div" >
+
+            <div class = "login_div">
+                <div class = "lf_div">
+                    <p class = "form_header su_header">Sign up</p>
+                    <label  class ="header_label">Sign up to continue</label>
+                </div>
+
+                  <div class = "form_div">
+                       <form method = "post" id = "signup_form">
+                           {% if (username_check == "invalid") %}
+                               <input type="text" name = "signup_username"  class = "input_box su_input su_wrong"  value = "{{signup_username}}" placeholder="Username" autofocus>
+                               <div class= "error_div">
+                                    <img src="../static/website_images/notfound_sign.png" alt="no_sign" style = "width:1rem">
+                                    {{error_message_u}}
+                               </div>
+                           {% else %}
+                                <input type="text" name = "signup_username"  class = "input_box su_input" value = "{{signup_username}}"  placeholder="Username">
+                           {% endif %}
+
+                           {% if (password_check =="invalid")  %}
+                               <div class = "pass_div">
+                                   <input type="password" name = "signup_password"  class = "input_box su_input su_wrong"  placeholder="Password" value = "{{signup_password}}" autofocus >
+                                   <img src="../static/website_images/showpass.png"  alt="show password" class = "pass_img" onclick = "togglePassword()">
+                               </div>
+                               <div class= "error_div">
+                                    <img src="../static/website_images/notfound_sign.png" alt="not found" style = "width:1rem">
+                                    {{error_message_p}}
+                               </div>
+                           {% else %}
+                               <div class ="pass_div" id = "kur">
+                                   <input type="password" name = "signup_password" class = "input_box su_input" value = "{{signup_password}}"    placeholder="Password" >
+                                   <img src="../static/website_images/showpass.png" alt="no_sign" class = "pass_img" onclick="togglePassword()">
+                               </div>
+                           {% endif %}
+
+                           {% if (email_check =="invalid") %}
+                               <input type="text" name = "signup_email"  class = "input_box su_input su_wrong"  placeholder="Email" value = "{{signup_email}}" autofocus >
+                               <div class= "error_div">
+                                    <img src="../static/website_images/notfound_sign.png" alt="no_sign" style = "width:1rem">
+                                    {{error_message_e}}
+                               </div>
+                           {% else %}
+                                <input type="text" name = "signup_email"  class = "input_box su_input"  placeholder="Email" value = "{{signup_email}}" >
+                           {% endif %}
+
+                           {% if not current_user.work%}
+                                {% if workname_check == "invalid" %}
+                                    <input type="text" name = "signup_workname" class = "input_box su_input su_wrong" placeholder = "Work name" value = "{{signup_workname}}">
+                                    <div class= "error_div">
+                                        <img src="../static/website_images/notfound_sign.png" alt="no_sign" style = "width:1rem">
+                                        {{error_message_w}}
+                                    </div>
+                                {% else %}
+                                    <input type="text" name = "signup_workname" class = "input_box su_input" placeholder = "Work name" value = "{{signup_workname}}">
+                                {% endif %}
+
+                           {% endif %}
+
+                           <button type="submit" form = "signup_form" name = "signup_button" id = "signup">Sign up</button>
+                       </form>
+                       <a href="{{url_for('login_google')}}">
+                            <button class="google_login_button">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 262">
+                                    <path fill="#4285F4" d="M255.878 133.451c0-10.734-.871-18.567-2.756-26.69H130.55v48.448h71.947c-1.45 12.04-9.283 30.172-26.69 42.356l-.244 1.622 38.755 30.023 2.685.268c24.659-22.774 38.875-56.282 38.875-96.027"></path>
+                                    <path fill="#34A853" d="M130.55 261.1c35.248 0 64.839-11.605 86.453-31.622l-41.196-31.913c-11.024 7.688-25.82 13.055-45.257 13.055-34.523 0-63.824-22.773-74.269-54.25l-1.531.13-40.298 31.187-.527 1.465C35.393 231.798 79.49 261.1 130.55 261.1"></path>
+                                    <path fill="#FBBC05" d="M56.281 156.37c-2.756-8.123-4.351-16.827-4.351-25.82 0-8.994 1.595-17.697 4.206-25.82l-.073-1.73L15.26 71.312l-1.335.635C5.077 89.644 0 109.517 0 130.55s5.077 40.905 13.925 58.602l42.356-32.782"></path>
+                                    <path fill="#EB4335" d="M130.55 50.479c24.514 0 41.05 10.589 50.479 19.438l36.844-35.974C195.245 12.91 165.798 0 130.55 0 79.49 0 35.393 29.301 13.925 71.947l42.211 32.783c10.59-31.477 39.891-54.251 74.414-54.251"></path>
+                                </svg>
+                                <span class = "google_text">Sign up with Google</span>
+                            </button>
+                       </a>
+                  </div>
+            </div>
+             <p class ="redirect_login">Already have an account? <a href = "{{url_for('login')}}">Sign in</a></p>
         </div>
-    
-          <div class = "form_div">
-               <form method = "post" id = "signup_form">
-                   {% if (username_check == "invalid") %}
-                   <input type="text" name = "signup_username"  class = "input_box su_input su_wrong"  value = "{{signup_username}}" placeholder="Username" autofocus>
-                   <div class= "error_div">
-                        <img src="../static/website_images/notfound_sign.png" alt="no_sign" style = "width:1rem">
-                        {{error_message_u}}
-                   </div>
-                   {% else %}
-                   <input type="text" name = "signup_username"  class = "input_box su_input" value = "{{signup_username}}"  placeholder="Username">
-                   {% endif %}
-
-                   {% if (password_check =="invalid")  %}
-                   <div class = "pass_div">
-                       <input type="password" name = "signup_password"  class = "input_box su_input su_wrong"  placeholder="Password" value = "{{signup_password}}" autofocus >
-                       <img src="../static/website_images/showpass.png"  alt="show password" class = "pass_img" onclick = "togglePassword()">
-                   </div>
-                   <div class= "error_div">
-                        <img src="../static/website_images/notfound_sign.png" alt="not found" style = "width:1rem">
-                        {{error_message_p}}
-                   </div>
-                   {% else %}
-                   <div class ="pass_div" id = "kur">
-                       <input type="password" name = "signup_password" class = "input_box su_input" value = "{{signup_password}}"    placeholder="Password" >
-                       <img src="../static/website_images/showpass.png" alt="no_sign" class = "pass_img" onclick="togglePassword()">
-                   </div>
-                   {% endif %}
-
-                   {% if (email_check =="invalid") %}
-                   <input type="text" name = "signup_email"  class = "input_box su_input su_wrong"  placeholder="Email" value = "{{signup_email}}" autofocus >
-                   <div class= "error_div">
-                        <img src="../static/website_images/notfound_sign.png" alt="no_sign" style = "width:1rem">
-                        {{error_message_e}}
-                   </div>
-                   {% else %}
-                   <input type="text" name = "signup_email"  class = "input_box su_input"  placeholder="Email" value = "{{signup_email}}" >
-                   {% endif %}
-                   <button type="submit" form = "signup_form" name = "signup_button" id = "signup">Sign up</button>
-               </form>
-               <a href="{{url_for('login_google')}}">
-                    <button class="google_login_button">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 262">
-                            <path fill="#4285F4" d="M255.878 133.451c0-10.734-.871-18.567-2.756-26.69H130.55v48.448h71.947c-1.45 12.04-9.283 30.172-26.69 42.356l-.244 1.622 38.755 30.023 2.685.268c24.659-22.774 38.875-56.282 38.875-96.027"></path>
-                            <path fill="#34A853" d="M130.55 261.1c35.248 0 64.839-11.605 86.453-31.622l-41.196-31.913c-11.024 7.688-25.82 13.055-45.257 13.055-34.523 0-63.824-22.773-74.269-54.25l-1.531.13-40.298 31.187-.527 1.465C35.393 231.798 79.49 261.1 130.55 261.1"></path>
-                            <path fill="#FBBC05" d="M56.281 156.37c-2.756-8.123-4.351-16.827-4.351-25.82 0-8.994 1.595-17.697 4.206-25.82l-.073-1.73L15.26 71.312l-1.335.635C5.077 89.644 0 109.517 0 130.55s5.077 40.905 13.925 58.602l42.356-32.782"></path>
-                            <path fill="#EB4335" d="M130.55 50.479c24.514 0 41.05 10.589 50.479 19.438l36.844-35.974C195.245 12.91 165.798 0 130.55 0 79.49 0 35.393 29.301 13.925 71.947l42.211 32.783c10.59-31.477 39.891-54.251 74.414-54.251"></path>
-                        </svg>
-                        <span>Sign up with Google</span>
-                    </button>
-               </a>
-          </div>
-    </div>
-     <p class ="redirect_login">Already have an account? <a href = "{{url_for('login')}}">Sign in</a></p>
-</div>
-
-</body>
-</html>
+    {% endblock %}

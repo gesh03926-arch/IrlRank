@@ -1,65 +1,61 @@
-<html lang = "en">
-<head>
-    <link rel="stylesheet" href="../static/styles.css">
-    <title>login</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block title %}Login{% endblock %}
+{% block body_info %} {% endblock %}
 
-<div class="main_div">
 
-    <h2 id = "header">Log into your account so we can keep track of your goals!</h2>
+    {% block content%}
+        <div class="main_div login_main_div">
 
-    <div class = "login_div">
-        <div class = "lf_div">
-            <p class = "form_header">Login Form</p>
-        </div>
+            <h2 id = "header">Log into your account so we can keep track of your goals!</h2>
 
-        <div class = "form_div">
-            <form method = "post">
-                {% if (username == "wrong") %}
-                <label for="log_user_w" class = "label_form">Username:</label>
-                <input type="text" name = "login_username" id = "log_user_w" class = "input_box wrong" value = "{{incorrect_username}}" placeholder="Enter your username" autofocus>
-                <div class="error_div">
-                    <img src="../static/website_images/notfound_sign.png" alt="no_sign" style = "width:1rem">
-                    Profile not found
+            <div class = "login_div">
+                <div class = "lf_div">
+                    <p class = "form_header">Login Form</p>
                 </div>
-                {% else%}
-                <label for="log_user" class = "label_form">Username:</label>
-                <input type="text" name = "login_username" id = "log_user" class = "input_box" value = "{{correct_username}}" placeholder="Enter your username: " >
-                {% endif %}
 
-                {% if (password == "wrong")%}
-                <label for="log_pass_w" class = "label_form" >Password:</label>
-                <input type="text" name = "login_password" id = "log_pass_w" class = "input_box wrong" placeholder="Enter your password: " autofocus>
-                <div class= "error_div">
-                    <img src="../static/website_images/notfound_sign.png" alt="no_sign" style = "width:1rem">
-                    Incorrect password. Try again.
+                <div class = "form_div">
+                    <form method = "post">
+                        {% if (username == "wrong") %}
+                            <input type="text" name = "login_username" id = "log_user_w" class = "input_box  su_input su_wrong" value = "{{incorrect_username}}" placeholder="Enter your username" autofocus>
+                            <div class="error_div">
+                                <img src="../static/website_images/notfound_sign.png" alt="no_sign" style = "width:1rem">
+                                Profile not found
+                            </div>
+                        {% else%}
+                            <input type="text" name = "login_username" id = "log_user" class = "input_box su_input" value = "{{correct_username}}" placeholder="Enter your username: " >
+                        {% endif %}
+
+                        {% if (password == "wrong")%}
+                            <input type="text" name = "login_password" id = "log_pass_w" class = "input_box su_input su_wrong" placeholder="Enter your password: " autofocus>
+                            <div class= "error_div">
+                                <img src="../static/website_images/notfound_sign.png" alt="no_sign" style = "width:1rem">
+                                Incorrect password. Try again.
+                            </div>
+                        {% else %}
+                            <input type="text" name = "login_password" id = "log_pass" class = "input_box su_input" placeholder="Enter your password: ">
+                        {% endif %}
+                        <input type="checkbox" id = "remember" name ="remember_box" value = "remember">
+                        <label for="remember">Remember me</label>
+                        <button type="submit" name = "login_button" id = "login">Submit</button>
+                    </form>
+                    <a href="{{url_for('login_google')}}">
+                        <button class="google_login_button">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 262">
+                                <path fill="#4285F4" d="M255.878 133.451c0-10.734-.871-18.567-2.756-26.69H130.55v48.448h71.947c-1.45 12.04-9.283 30.172-26.69 42.356l-.244 1.622 38.755 30.023 2.685.268c24.659-22.774 38.875-56.282 38.875-96.027"></path>
+                                <path fill="#34A853" d="M130.55 261.1c35.248 0 64.839-11.605 86.453-31.622l-41.196-31.913c-11.024 7.688-25.82 13.055-45.257 13.055-34.523 0-63.824-22.773-74.269-54.25l-1.531.13-40.298 31.187-.527 1.465C35.393 231.798 79.49 261.1 130.55 261.1"></path>
+                                <path fill="#FBBC05" d="M56.281 156.37c-2.756-8.123-4.351-16.827-4.351-25.82 0-8.994 1.595-17.697 4.206-25.82l-.073-1.73L15.26 71.312l-1.335.635C5.077 89.644 0 109.517 0 130.55s5.077 40.905 13.925 58.602l42.356-32.782"></path>
+                                <path fill="#EB4335" d="M130.55 50.479c24.514 0 41.05 10.589 50.479 19.438l36.844-35.974C195.245 12.91 165.798 0 130.55 0 79.49 0 35.393 29.301 13.925 71.947l42.211 32.783c10.59-31.477 39.891-54.251 74.414-54.251"></path>
+                            </svg>
+                            <span class = "google_text">Continue with Google</span>
+                        </button>
+                    </a>
+
+
+
                 </div>
-                {% else %}
-                <label for="log_pass" class = "label_form" >Password:</label>
-                <input type="text" name = "login_password" id = "log_pass" class = "input_box" placeholder="Enter your password: ">
-                {% endif %}
-                <input type="checkbox" id = "remember" name ="remember_box" value = "remember">
-                <label for="remember">Remember me</label>
-                <button type="submit" name = "login_button" id = "login">Submit</button>
-            </form>
-            <a href="{{url_for('login_google')}}">
-                <button class="google_login_button">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 262">
-                        <path fill="#4285F4" d="M255.878 133.451c0-10.734-.871-18.567-2.756-26.69H130.55v48.448h71.947c-1.45 12.04-9.283 30.172-26.69 42.356l-.244 1.622 38.755 30.023 2.685.268c24.659-22.774 38.875-56.282 38.875-96.027"></path>
-                        <path fill="#34A853" d="M130.55 261.1c35.248 0 64.839-11.605 86.453-31.622l-41.196-31.913c-11.024 7.688-25.82 13.055-45.257 13.055-34.523 0-63.824-22.773-74.269-54.25l-1.531.13-40.298 31.187-.527 1.465C35.393 231.798 79.49 261.1 130.55 261.1"></path>
-                        <path fill="#FBBC05" d="M56.281 156.37c-2.756-8.123-4.351-16.827-4.351-25.82 0-8.994 1.595-17.697 4.206-25.82l-.073-1.73L15.26 71.312l-1.335.635C5.077 89.644 0 109.517 0 130.55s5.077 40.905 13.925 58.602l42.356-32.782"></path>
-                        <path fill="#EB4335" d="M130.55 50.479c24.514 0 41.05 10.589 50.479 19.438l36.844-35.974C195.245 12.91 165.798 0 130.55 0 79.49 0 35.393 29.301 13.925 71.947l42.211 32.783c10.59-31.477 39.891-54.251 74.414-54.251"></path>
-                    </svg>
-                    <span>Continue with Google</span>
-                </button>
-            </a>
-
+            </div>
             <a id = "signup_link" href = "{{url_for('signup')}}">Don't have an account? </a>
+            <br>
+            <a href="{{url_for('recovery')}}">Forgot password?</a>
         </div>
-
-    </div>
-</div>
-
-</body>
-</html>
+    {% endblock %}
